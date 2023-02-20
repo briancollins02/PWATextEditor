@@ -16,23 +16,23 @@ const initdb = async () =>
 export const putDb = async (content) => {
   console.log('putDb function');
   const jateDb = await openDB('jate', 1);
-  const transact = jateDb.transaction('jate', 'readwrite');
-  const store = transact.objectStore('jate');
-  const req = store.put({ id: 1, value: content });
-  const res = await req;
-  console.log('data saved to db', res.value);
+  const tx = jateDb.transaction('jate', 'readwrite');
+  const store = tx.objectStore('jate');
+  const request = store.put({ id: 1, value: content });
+  const response = await request;
+  console.log('data saved to db', response.value);
 };
 
 // TODO: Add logic for a method that gets all the content from the database
 export const getDb = async () => {
   console.log('getDb function');
   const jateDb = await openDB('jate', 1);
-  const transact = jateDb.transaction('jate', 'readonly');
-  const store = transact.objectStore('jate');
-  const req = store.put({ id: 1, value: content });
-  const res = await req;
-  res ? console.log('data loaded!', res.value) : console.log('data not found');
-  return res?.value;
+  const tx = jateDb.transaction('jate', 'readonly');
+  const store = tx.objectStore('jate');
+  const request = store.get(1);
+  const response = await request;
+  response ? console.log('data loaded!', response.value) : console.log('data not found');
+  return response?.value;
 };
 
 initdb();
